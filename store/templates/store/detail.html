@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Material Design Bootstrap</title>
+    <title>{{ product.category }}</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <!-- Bootstrap core CSS -->
@@ -58,13 +58,25 @@
 
                 <!-- Right -->
                 <ul class="navbar-nav nav-flex-icons">
+                    {% with total_item=cart|length %}
+                    {% if total_item > 0 %}
                     <li class="nav-item">
-                        <a class="nav-link waves-effect">
-                            <span class="badge red z-depth-1 mr-1"> 1 </span>
+                        <a class="nav-link waves-effect" href="{% url 'cart:cart_page' %}">
+                            <span class="badge red z-depth-1 mr-2">${{ cart.get_total_price }}</span>
                             <i class="fas fa-shopping-cart"></i>
                             <span class="clearfix d-none d-sm-inline-block"> Cart </span>
                         </a>
                     </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect" href="{% url 'cart:cart_page' %}">
+                            <span class="badge red z-depth-1 mr-2">$0</span>
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="clearfix d-none d-sm-inline-block">Cart</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% endwith %}
                     <li class="nav-item">
                         <a href="https://www.facebook.com/mdbootstrap" class="nav-link waves-effect" target="_blank">
                             <i class="fab fa-facebook-f"></i>
@@ -73,12 +85,6 @@
                     <li class="nav-item">
                         <a href="https://twitter.com/MDBootstrap" class="nav-link waves-effect" target="_blank">
                             <i class="fab fa-twitter"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="https://github.com/mdbootstrap/bootstrap-material-design"
-                            class="nav-link border border-light rounded waves-effect" target="_blank">
-                            <i class="fab fa-github mr-2"></i>MDB GitHub
                         </a>
                     </li>
                 </ul>
@@ -115,18 +121,12 @@
                             <a href="{{ product.category.get_absolute_url }}">
                                 <span class="badge purple mr-1">{{product.category}}</span>
                             </a>
-                            <a href="">
-                                <span class="badge blue mr-1">New</span>
-                            </a>
-                            <a href="">
-                                <span class="badge red mr-1">Bestseller</span>
+                            <a href="{{ product.get_absolute_url }}">
+                                <span class="badge red mr-3">{{ product.name }}</span>
                             </a>
                         </div>
 
                         <p class="lead">
-                            <span class="mr-1">
-                                <del>$3000</del>
-                            </span>
                             <span>${{ product.price }}</span>
                         </p>
 
@@ -134,10 +134,13 @@
 
                         <p>{{ product.description }}</p>
 
-                        <form class="d-flex justify-content-left">
+                        <form class="d-flex justify-content-left" action="{% url 'cart:cart_add' product.id %}"
+                            method="POST">
+                            {% csrf_token %}
                             <!-- Default input -->
-                            <input type="number" value="1" aria-label="Search" class="form-control"
-                                style="width: 100px">
+                            <label for="id_quantity" class="m-2">Quantity: </label>
+                            <input type="number" id="id_quantity" name="quantity" value="1" aria-label="Search"
+                                class="form-control" style="width: 100px">
                             <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
                                 <i class="fas fa-shopping-cart ml-1"></i>
                             </button>

@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>{% block title %}{% endblock %}</title>
+  <title>{% if category %}{{ category.name }}{% else %}Store{% endif %}</title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Bootstrap core CSS -->
@@ -84,13 +84,25 @@
 
         <!-- Right -->
         <ul class="navbar-nav nav-flex-icons">
+          {% with total_item=cart|length %}
+          {% if total_item > 0 %}
           <li class="nav-item">
-            <a class="nav-link waves-effect">
-              <span class="badge red z-depth-1 mr-1"> 1 </span>
+            <a class="nav-link waves-effect" href="{% url 'cart:cart_page' %}">
+              <span class="badge red z-depth-1 mr-2">${{ cart.get_total_price }}</span>
               <i class="fas fa-shopping-cart"></i>
               <span class="clearfix d-none d-sm-inline-block"> Cart </span>
             </a>
           </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'cart:cart_page' %}">
+              <span class="badge red z-depth-1 mr-2">$0</span>
+              <i class="fas fa-shopping-cart"></i>
+              <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+            </a>
+          </li>
+          {% endif %}
+          {% endwith %}
           <li class="nav-item">
             <a href="https://www.facebook.com/mdbootstrap" class="nav-link waves-effect" target="_blank">
               <i class="fab fa-facebook-f"></i>
@@ -99,12 +111,6 @@
           <li class="nav-item">
             <a href="https://twitter.com/MDBootstrap" class="nav-link waves-effect" target="_blank">
               <i class="fab fa-twitter"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="https://github.com/mdbootstrap/bootstrap-material-design"
-              class="nav-link border border-light rounded waves-effect" target="_blank">
-              <i class="fab fa-github mr-2"></i>MDB GitHub
             </a>
           </li>
         </ul>
@@ -271,7 +277,7 @@
               </a>
             </li>
             {% for c in categories %}
-            <li {% if category.slug == c.slug %} class="nav-item active" {% endif %}>
+            <li {% if category.slug is c.slug %} class="nav-item active" {% endif %}>
               <a class="nav-link" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
             </li>
             {% endfor %}

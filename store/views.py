@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from . models import Product, Category
-
+from django.conf import settings
+from cart.forms import CartForm
 
 def store_page(request, category_slug=None):
     category = None
@@ -20,5 +21,5 @@ def detail_page(request, slug=None, detail_id=None):
 
     product = get_object_or_404(
         Product, slug=slug, id=detail_id, available=True)
-
-    return render(request, 'store/detail.html', {"product": product})
+    form = CartForm()    
+    return render(request, 'store/detail.html', {"product": product, 'form':form})
