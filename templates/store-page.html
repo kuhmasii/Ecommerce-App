@@ -46,9 +46,8 @@
 </head>
 
 <body>
-
   <!-- Navbar -->
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-primary white scrolling-navbar">
     <div class="container">
 
       <!-- Brand -->
@@ -72,11 +71,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link waves-effect" href="https://mdbootstrap.com/docs/jquery/" target="_blank">Product</a>
+            <a class="nav-link waves-effect" href="https://mdbootstrap.com/docs/jquery/">Product</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link waves-effect" href="https://mdbootstrap.com/docs/jquery/getting-started/download/"
-              target="_blank">Check
+            <a class="nav-link waves-effect" href="{% url 'orders:order_page' %}">Check
               Out
             </a>
           </li>
@@ -85,23 +83,13 @@
         <!-- Right -->
         <ul class="navbar-nav nav-flex-icons">
           {% with total_item=cart|length %}
-          {% if total_item > 0 %}
           <li class="nav-item">
             <a class="nav-link waves-effect" href="{% url 'cart:cart_page' %}">
-              <span class="badge red z-depth-1 mr-2">${{ cart.get_total_price }}</span>
+              <span class="badge red z-depth-1 mr-1">{{ total_item }}</span>
               <i class="fas fa-shopping-cart"></i>
               <span class="clearfix d-none d-sm-inline-block"> Cart </span>
             </a>
           </li>
-          {% else %}
-          <li class="nav-item">
-            <a class="nav-link waves-effect" href="{% url 'cart:cart_page' %}">
-              <span class="badge red z-depth-1 mr-2">$0</span>
-              <i class="fas fa-shopping-cart"></i>
-              <span class="clearfix d-none d-sm-inline-block"> Cart </span>
-            </a>
-          </li>
-          {% endif %}
           {% endwith %}
           <li class="nav-item">
             <a href="https://www.facebook.com/mdbootstrap" class="nav-link waves-effect" target="_blank">
@@ -373,7 +361,6 @@
     </div>
   </main>
   <!--Main layout-->
-
   <!--Footer-->
   <footer class="page-footer text-center font-small mt-4 wow fadeIn">
 

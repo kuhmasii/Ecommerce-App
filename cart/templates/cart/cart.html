@@ -14,16 +14,17 @@
 			<br>
 			<br>
 			<table class="table">
-				{% with total=cart %}
+				{% with total=cart|length %}
 				<tr>
 					<th>
-						<h4 class="text-primary">Total Items: <strong>still working on it</strong></h4>
+						<h4 class="text-primary">Total Items: <strong>{{ total }}</strong></h4>
 					</th>
 					<th>
-						<h4 class="text-primary">Total items price: <strong>{{ total.get_total_price }}</strong></h4>
+						<h4 class="text-primary">Total items price: <strong>{{ cart.get_total_price }}</strong></h4>
 					</th>
 					<th>
-						<a style="float:right; margin:5px;" class="btn btn-success" href="#">Checkout</a>
+						<a style="float:right; margin:5px;" class="btn btn-success"
+							href="{% url 'orders:order_page' %}">Checkout</a>
 					</th>
 				</tr>
 				{% endwith %}
