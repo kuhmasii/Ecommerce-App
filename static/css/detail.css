@@ -1,0 +1,14 @@
+body{
+    height: 100%;
+}
+
+#mainsection{
+    min-height: 100%;
+}
+
+.page-footer{
+    background-color: black;
+    text-align: center;
+    font-size: larger;
+    position: relative;
+  }

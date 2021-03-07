@@ -15,12 +15,13 @@
   <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
   <!-- Your custom styles (optional) -->
   <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+
   <style type="text/css">
     html,
     body,
     header,
     .carousel {
-      height: 60vh;
+      height: 80vh;
     }
 
     @media (max-width: 740px) {
@@ -41,6 +42,22 @@
       .carousel {
         height: 100vh;
       }
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    #mainsection {
+      min-height: 100%;
+    }
+
+    #footer {
+      background-color: black;
+      text-align: center;
+      font-size: larger;
+      position: relative;
     }
   </style>
 </head>
@@ -219,9 +236,8 @@
 
   </div>
   <!--/.Carousel Wrapper-->
-
   <!--Main layout-->
-  <main>
+  <main id="mainsection">
     <div class="container">
 
       <!--Navbar-->
@@ -311,43 +327,46 @@
           <!--Grid row-->
       </section>
       <!--Section: Products v.3-->
-
-      <!--Pagination-->
-      <nav class="d-flex justify-content-center wow fadeIn">
-        {% with page=product %}
-        <ul class="pagination pg-blue">
-          {% if page.has_previous %}
-          <!--Arrow left-->
-          <li class="page-item">
-            <a class="page-link" href="?page={{ page.previous_page_number }}" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-              <span class="sr-only">Previous</span>
-            </a>
-          </li>
-          {% endif %}
-          <li class="page-item active">
-            <a class="page-link" href="?page={{ page.number }}">{{ page.number }}
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          {% if page.has_next %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ page.next_page_number }}" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-              <span class="sr-only">Next</span>
-            </a>
-          </li>
-          {% endif %}
-        </ul>
-        {% endwith %}
-      </nav>
-      <!--Pagination-->
-
     </div>
   </main>
-  <!--Main layout-->
+  <!-- main layout-->
+
+  <!-- pagination -->
+  <div class="container">
+    <nav class="d-flex justify-content-center wow fadeIn">
+      {% with page=product %}
+      <ul class="pagination pg-blue">
+        {% if page.has_previous %}
+        <!--Arrow left-->
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page.previous_page_number }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        {% endif %}
+        <li class="page-item active">
+          <a class="page-link" href="?page={{ page.number }}">{{ page.number }}
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        {% if page.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page.next_page_number }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+      {% endwith %}
+    </nav>
+    <!--Pagination-->
+  </div>
+  <!-- pagination -->
+  
   <!--Footer-->
-  <footer class="page-footer text-center font-small mt-4 wow fadeIn">
+  <footer id="footer" class="page-footer wow fadeIn">
     <hr class="my-4">
 
     <!-- Social icons -->

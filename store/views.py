@@ -15,7 +15,7 @@ def store_page(request, category_slug=None):
         # product = product.filter(category=category)
 
     # using paginator
-    paginator = Paginator(product, 8)
+    paginator = Paginator(product, 12)
     page = request.GET.get("page")
 
     try:
