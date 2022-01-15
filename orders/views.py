@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import  reverse
 from .forms import OrderForm
 from .models import OrderItem
 from cart.cart import Cart
@@ -22,7 +23,13 @@ def order_page(request):
             cart.clear()
             # lauching asynchronous task
             order_created.delay(order.id)
-            return render(request, 'orders/success_page.html', dict(order=order))
+            # set the order in the session
+            print("before session", request.session)
+            request.session['order_id'] = order.id
+            print(request.session)
+            #redirect for payment
+            # return render(request, 'orders/success_page.html', dict(order=order))
+            return redirect(reverse('payment:payment_process'))
     else:
         form = OrderForm()
 
